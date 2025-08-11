@@ -5,8 +5,7 @@ class WiseSaying {
     var content: String = ""
     var author: String = ""
 
-    constructor(id: Int, content: String, author: String) {
-        this.id = id
+    constructor(content: String, author: String) {
         this.content = content
         this.author = author
     }

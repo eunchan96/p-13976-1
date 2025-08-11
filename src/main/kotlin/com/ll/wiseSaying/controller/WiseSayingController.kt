@@ -37,10 +37,12 @@ class WiseSayingController {
         }
 
         val id = params[1].toInt()
-        wiseSayingService.delete(id) ?: run {
+        val wiseSaying = wiseSayingService.findById(id) ?: run {
             println("${id}번 명언은 존재하지 않습니다.")
             return
         }
+
+        wiseSayingService.delete(wiseSaying)
 
         println("${id}번 명언이 삭제되었습니다.")
     }
@@ -71,7 +73,7 @@ class WiseSayingController {
         print("작가 : ")
         val author = readlnOrNull()!!.trim()
 
-        wiseSayingService.modify(id, content, author)
+        wiseSayingService.modify(wiseSaying, content, author)
 
         println("${id}번 명언이 수정되었습니다.")
     }
