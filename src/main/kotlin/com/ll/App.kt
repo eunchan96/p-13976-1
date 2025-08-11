@@ -4,8 +4,8 @@ import com.ll.domain.system.controller.SystemController
 import com.ll.domain.wiseSaying.controller.WiseSayingController
 
 class App {
-    private val WiseSayingController = WiseSayingController()
-    private val SystemController = SystemController()
+    private val wiseSayingController = WiseSayingController()
+    private val systemController = SystemController()
 
     fun run() {
         println("== 명언 앱 ==")
@@ -16,11 +16,11 @@ class App {
             val cmd = rq.split("?")
 
             when (cmd[0]) {
-                "종료" -> SystemController.exit()
-                "등록" -> WiseSayingController.create()
-                "목록" -> WiseSayingController.list()
-                "삭제" -> WiseSayingController.delete(cmd)
-                "수정" -> WiseSayingController.modify(cmd)
+                "종료" -> systemController.exit()
+                "등록" -> wiseSayingController.create()
+                "목록" -> wiseSayingController.list()
+                "삭제" -> wiseSayingController.delete(cmd)
+                "수정" -> wiseSayingController.modify(cmd)
                 else -> println("알 수 없는 명령입니다.")
             }
         }
