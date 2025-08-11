@@ -1,6 +1,8 @@
 package com
 
 class App {
+    var lastId = 0
+
     fun run() {
         println("== 명언 앱 ==")
 
@@ -20,5 +22,7 @@ class App {
         val content = readLine()
         print("작가 : ")
         val author = readLine()
+
+        println("${++lastId}번 명언이 등록되었습니다.")
     }
 }
