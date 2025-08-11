@@ -8,8 +8,7 @@ class AppTest {
     @Test
     @DisplayName("== 명언 앱 == 출력")
     fun t1() {
-        val input = ""
-        val output = AppTestRunner.run(input)
+        val output = AppTestRunner.run("")
 
         assertThat(output)
             .contains("== 명언 앱 ==")

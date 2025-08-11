@@ -74,7 +74,5 @@ class WiseSayingController {
         val author = readlnOrNull()!!.trim()
 
         wiseSayingService.modify(wiseSaying, content, author)
-
-        println("${id}번 명언이 수정되었습니다.")
     }
 }
