@@ -16,7 +16,10 @@ class App {
             val cmd = rq.split("?")
 
             when (cmd[0]) {
-                "종료" -> systemController.exit()
+                "종료" -> {
+                    systemController.exit()
+                    return
+                }
                 "등록" -> wiseSayingController.create()
                 "목록" -> wiseSayingController.list()
                 "삭제" -> wiseSayingController.delete(cmd)
