@@ -1,31 +1,15 @@
-package com
+package com.ll.wiseSaying.controller
 
-import com.wiseSaying.entity.WiseSaying
+import com.ll.wiseSaying.entity.WiseSaying
+import com.ll.wiseSaying.service.WiseSayingService
 
-class App {
+class WiseSayingController {
+    private val wiseSayingService = WiseSayingService()
+
     private var lastId = 0
     private val wiseSayings = mutableListOf<WiseSaying>()
 
-    fun run() {
-        println("== 명언 앱 ==")
-
-        while (true) {
-            print("명령) ")
-            val rq = readlnOrNull()!!.trim()
-            val cmd = rq.split("?")
-
-            when (cmd[0]) {
-                "종료" -> return
-                "등록" -> create()
-                "목록" -> list()
-                "삭제" -> delete(cmd)
-                "수정" -> modify(cmd)
-                else -> println("알 수 없는 명령입니다.")
-            }
-        }
-    }
-
-    private fun create() {
+    fun create() {
         print("명언 : ")
         val content = readlnOrNull()!!.trim()
         print("작가 : ")
@@ -37,7 +21,7 @@ class App {
         println("${lastId}번 명언이 등록되었습니다.")
     }
 
-    private fun list() {
+    fun list() {
         println("번호 / 작가 / 명언")
         println("----------------------")
         for (wiseSaying in findAll()) {
@@ -49,7 +33,7 @@ class App {
         return wiseSayings.reversed()
     }
 
-    private fun delete(cmd: List<String>) {
+    fun delete(cmd: List<String>) {
         if (cmd.size < 2) {
             println("삭제할 명언의 번호를 입력해주세요.")
             return
@@ -71,7 +55,7 @@ class App {
         println("${id}번 명언이 삭제되었습니다.")
     }
 
-    private fun modify(cmd: List<String>) {
+    fun modify(cmd: List<String>) {
         if (cmd.size < 2) {
             println("수정할 명언의 번호를 입력해주세요.")
             return

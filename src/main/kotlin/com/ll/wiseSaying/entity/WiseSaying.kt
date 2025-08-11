@@ -1,4 +1,4 @@
-package com.wiseSaying.entity
+package com.ll.wiseSaying.entity
 
 class WiseSaying {
     var id: Int = 0
