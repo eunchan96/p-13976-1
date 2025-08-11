@@ -11,7 +11,7 @@ class App {
 
         while (true) {
             print("명령) ")
-            val cmd = readLine()
+            val cmd = readlnOrNull()!!.trim()
 
             when (cmd) {
                 "종료" -> return
@@ -23,11 +23,11 @@ class App {
 
     private fun create() {
         print("명언 : ")
-        val content = readLine()
+        val content = readlnOrNull()!!.trim()
         print("작가 : ")
-        val author = readLine()
+        val author = readlnOrNull()!!.trim()
 
-        val wiseSaying = WiseSaying(++lastId, content ?: "", author ?: "")
+        val wiseSaying = WiseSaying(++lastId, content, author)
         wiseSayings.add(wiseSaying)
 
         println("${lastId}번 명언이 등록되었습니다.")
