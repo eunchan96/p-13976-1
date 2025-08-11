@@ -1,6 +1,6 @@
-package com.ll.wiseSaying.repository
+package com.ll.domain.wiseSaying.repository
 
-import com.ll.wiseSaying.entity.WiseSaying
+import com.ll.domain.wiseSaying.entity.WiseSaying
 
 class WiseSayingRepository {
     private var lastId = 0

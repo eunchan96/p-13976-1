@@ -1,4 +1,4 @@
-package com.ll.wiseSaying
+package com.ll
 
 class Main {
     companion object {

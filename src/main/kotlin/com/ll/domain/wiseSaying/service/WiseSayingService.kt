@@ -1,16 +1,14 @@
-package com.ll.wiseSaying.service
+package com.ll.domain.wiseSaying.service
 
-import com.ll.wiseSaying.entity.WiseSaying
-import com.ll.wiseSaying.repository.WiseSayingRepository
+import com.ll.domain.wiseSaying.entity.WiseSaying
+import com.ll.domain.wiseSaying.repository.WiseSayingRepository
 
 class WiseSayingService {
     private val wiseSayingRepository = WiseSayingRepository()
 
     fun create(content: String, author: String): WiseSaying {
         val wiseSaying = WiseSaying(content, author)
-        wiseSayingRepository.save(wiseSaying)
-
-        return wiseSaying
+        return wiseSayingRepository.save(wiseSaying)
     }
 
     fun findAll(): List<WiseSaying> {

@@ -1,6 +1,6 @@
-package com.ll.wiseSaying.controller
+package com.ll.domain.wiseSaying.controller
 
-import com.ll.wiseSaying.service.WiseSayingService
+import com.ll.domain.wiseSaying.service.WiseSayingService
 
 class WiseSayingController {
     private val wiseSayingService = WiseSayingService()

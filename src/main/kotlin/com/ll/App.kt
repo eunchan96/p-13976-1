@@ -1,9 +1,11 @@
-package com.ll.wiseSaying
+package com.ll
 
-import com.ll.wiseSaying.controller.WiseSayingController
+import com.ll.domain.system.controller.SystemController
+import com.ll.domain.wiseSaying.controller.WiseSayingController
 
 class App {
     private val WiseSayingController = WiseSayingController()
+    private val SystemController = SystemController()
 
     fun run() {
         println("== 명언 앱 ==")
@@ -14,7 +16,7 @@ class App {
             val cmd = rq.split("?")
 
             when (cmd[0]) {
-                "종료" -> return
+                "종료" -> SystemController.exit()
                 "등록" -> WiseSayingController.create()
                 "목록" -> WiseSayingController.list()
                 "삭제" -> WiseSayingController.delete(cmd)
