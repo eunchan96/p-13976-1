@@ -11,12 +11,14 @@ class App {
 
         while (true) {
             print("명령) ")
-            val cmd = readlnOrNull()!!.trim()
+            val rq = readlnOrNull()!!.trim()
+            val cmd = rq.split("?")
 
-            when (cmd) {
+            when (cmd[0]) {
                 "종료" -> return
                 "등록" -> create()
                 "목록" -> list()
+                "삭제" -> delete(cmd)
             }
         }
     }
@@ -43,5 +45,27 @@ class App {
 
     private fun findAll(): List<WiseSaying> {
         return wiseSayings.reversed()
+    }
+
+    private fun delete(cmd: List<String>) {
+        if (cmd.size < 2) {
+            println("삭제할 명언의 번호를 입력해주세요.")
+            return
+        }
+
+        val params = cmd[1].split("=")
+        if (params.size < 2 || params[0] != "id" || params[1].isBlank()) {
+            println("잘못된 명령입니다.")
+            return
+        }
+
+        val id = params[1].toIntOrNull()
+        val wiseSaying = wiseSayings.find { it.id == id } ?: run {
+            println("${id}번 명언은 존재하지 않습니다.")
+            return
+        }
+
+        wiseSayings.remove(wiseSaying)
+        println("${id}번 명언이 삭제되었습니다.")
     }
 }
