@@ -13,27 +13,27 @@ class WiseSayingFileRepository : WiseSayingRepository {
         }
         val wiseSayingMap = wiseSaying.toMap()
         val wiseSayingJsonStr = Util.JsonUtil.toString(wiseSayingMap)
-        Util.FileUtil.set("db/wiseSaying/${wiseSaying.id}.json", wiseSayingJsonStr)
+        Util.FileUtil.set("${getTableDirPath()}/${wiseSaying.id}.json", wiseSayingJsonStr)
         return wiseSaying
     }
 
     private fun getLastId(): Int {
-        return Util.FileUtil.getAsInt("db/wiseSaying/lastId.txt", 0)
+        return Util.FileUtil.getAsInt("${getTableDirPath()}/lastId.txt", 0)
     }
 
     private fun setLastId(newId: Int) {
-        Util.FileUtil.set("db/wiseSaying/lastId.txt", newId)
+        Util.FileUtil.set("${getTableDirPath()}/lastId.txt", newId)
     }
 
     override fun findById(id: Int): WiseSaying? {
-        val wiseSayingJsonStr = Util.FileUtil.get("db/wiseSaying/$id.json")
+        val wiseSayingJsonStr = Util.FileUtil.get("${getTableDirPath()}/$id.json")
         if (wiseSayingJsonStr.isBlank()) return null
         val wiseSayingMap = Util.JsonUtil.toMap(wiseSayingJsonStr)
         return WiseSaying(wiseSayingMap)
     }
 
     override fun delete(wiseSaying: WiseSaying): Boolean {
-        return Util.FileUtil.delete("db/wiseSaying/${wiseSaying.id}.json")
+        return Util.FileUtil.delete("${getTableDirPath()}/${wiseSaying.id}.json")
     }
 
     private fun createPage(items: List<WiseSaying>, pageable: Pageable): Page<WiseSaying> {
@@ -51,7 +51,7 @@ class WiseSayingFileRepository : WiseSayingRepository {
     }
 
     private fun findAll(): List<WiseSaying> {
-        return Util.FileUtil.walkRegularFiles("db/wiseSaying", "\\d+\\.json")
+        return Util.FileUtil.walkRegularFiles(getTableDirPath(), "\\d+\\.json")
             .map { file -> Util.FileUtil.get(file.path) }
             .map { jsonStr -> Util.JsonUtil.toMap(jsonStr) }
             .map { map -> WiseSaying(map) }
@@ -74,6 +74,6 @@ class WiseSayingFileRepository : WiseSayingRepository {
     }
 
     fun clear() {
-        Util.FileUtil.rmdir("db/wiseSaying")
+        Util.FileUtil.rmdir(getTableDirPath())
     }
 }
