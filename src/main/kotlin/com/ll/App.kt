@@ -1,13 +1,10 @@
 package com.ll
 
-import com.ll.domain.system.controller.SystemController
-import com.ll.domain.wiseSaying.controller.WiseSayingController
+import com.ll.global.app.AppContext.systemController
+import com.ll.global.app.AppContext.wiseSayingController
 import com.ll.global.rq.Rq
 
 class App {
-    private val wiseSayingController = WiseSayingController()
-    private val systemController = SystemController()
-
     fun run() {
         println("== 명언 앱 ==")
 

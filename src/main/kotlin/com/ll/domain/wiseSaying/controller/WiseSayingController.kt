@@ -1,14 +1,12 @@
 package com.ll.domain.wiseSaying.controller
 
+import com.ll.global.app.AppContext.wiseSayingService
 import com.ll.domain.wiseSaying.entity.WiseSaying
-import com.ll.domain.wiseSaying.service.WiseSayingService
 import com.ll.global.rq.Rq
 import com.ll.standard.page.Page
 import com.ll.standard.page.Pageable
 
 class WiseSayingController {
-    private val wiseSayingService = WiseSayingService()
-
     fun create() {
         print("명언 : ")
         val content = readlnOrNull()!!.trim()

@@ -73,7 +73,7 @@ class WiseSayingFileRepository : WiseSayingRepository {
         return createPage(filtered, pageable)
     }
 
-    fun clear() {
+    override fun clear() {
         Util.FileUtil.rmdir(getTableDirPath())
     }
 }

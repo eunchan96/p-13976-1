@@ -51,4 +51,9 @@ class WiseSayingMemoryRepository : WiseSayingRepository {
         val filtered = wiseSayings.filter { it.author.contains(keyword) || it.content.contains(keyword) }
         return createPage(filtered, pageable)
     }
+
+    override fun clear() {
+        lastId = 0
+        wiseSayings.clear()
+    }
 }

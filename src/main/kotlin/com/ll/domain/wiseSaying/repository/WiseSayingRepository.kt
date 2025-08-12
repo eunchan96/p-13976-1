@@ -19,6 +19,8 @@ interface WiseSayingRepository {
 
     fun findForListByContentOrAuthor(keyword: String, pageable: Pageable): Page<WiseSaying>
 
+    fun clear()
+
     fun getTableDirPath(): String {
         return "db/wiseSaying"
     }
