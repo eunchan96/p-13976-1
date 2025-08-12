@@ -30,7 +30,7 @@ class WiseSayingService {
     }
 
     fun findForList(pageable: Pageable, keywordType: String, keyword: String): Page<WiseSaying> {
-        if (keyword == "") return wiseSayingRepository.findAll(pageable)
+        if (keyword == "") return wiseSayingRepository.findForList(pageable)
         return when (keywordType) {
             "content" -> wiseSayingRepository.findForListByContent(keyword, pageable)
             "author" -> wiseSayingRepository.findForListByAuthor(keyword, pageable)
