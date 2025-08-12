@@ -19,9 +19,6 @@ class WiseSayingController {
     }
 
     fun list(rq: Rq) {
-        println("번호 / 작가 / 명언")
-        println("----------------------")
-
         val pageNum = rq.getParamAsInt("page", 1)
         val pageSize = rq.getParamAsInt("pageSize", 5)
         val pageable = Pageable(pageNum, pageSize)
@@ -31,13 +28,23 @@ class WiseSayingController {
 
         val wiseSayingPage: Page<WiseSaying> = wiseSayingService.findForList(pageable, keywordType, keyword)
 
+        if (keyword.isNotBlank()) {
+            println("----------------------")
+            println("검색타입 : $keywordType")
+            println("검색어 : $keyword")
+            println("----------------------")
+        }
+
+        println("번호 / 작가 / 명언")
+        println("----------------------")
+
         for (wiseSaying in wiseSayingPage.content) {
             println("${wiseSaying.id} / ${wiseSaying.author} / ${wiseSaying.content}")
         }
 
         print("페이지 : ")
         val pageMenu = (1..wiseSayingPage.totalPages).joinToString(" / ") {
-            i -> if (i == wiseSayingPage.pageNum) "[$i]" else "$i"
+                i -> if (i == wiseSayingPage.pageNum) "[$i]" else "$i"
         }
         println(pageMenu)
     }

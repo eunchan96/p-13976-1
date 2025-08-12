@@ -143,6 +143,10 @@ class WiseSayingControllerTest {
             """)
 
         assertThat(output)
+            .contains("----------------------")
+            .contains("검색타입 : author")
+            .contains("검색어 : 작가")
+            .contains("----------------------")
             .contains("2 / 작가미상 / 내 사전에 불가능이란 없다.")
             .contains("1 / 작가미상 / 나의 죽음을 적들에게 알리지 마라.")
     }
@@ -162,6 +166,10 @@ class WiseSayingControllerTest {
             """)
 
         assertThat(output)
+            .contains("----------------------")
+            .contains("검색타입 : content")
+            .contains("검색어 : 불가능")
+            .contains("----------------------")
             .contains("2 / 작가미상 / 내 사전에 불가능이란 없다.")
             .doesNotContain("1 / 작가미상 / 나의 죽음을 적들에게 알리지 마라.")
     }
@@ -181,6 +189,10 @@ class WiseSayingControllerTest {
             """)
 
         assertThat(output)
+            .contains("----------------------")
+            .contains("검색타입 : all")
+            .contains("검색어 : 이순신")
+            .contains("----------------------")
             .doesNotContain("2 / 나폴레옹 / 내 사전에 불가능이란 없다.")
             .contains("1 / 이순신 / 나의 죽음을 적들에게 알리지 마라.")
     }
