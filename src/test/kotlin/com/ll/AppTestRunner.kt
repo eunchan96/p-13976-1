@@ -1,6 +1,6 @@
 package com.ll
 
-import com.ll.domain.standard.util.TestUtil
+import com.ll.standard.util.TestUtil
 
 object AppTestRunner {
     fun run(input: String): String {

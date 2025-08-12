@@ -1,12 +1,12 @@
 package com.ll.domain.wiseSaying.service
 
 import com.ll.domain.wiseSaying.entity.WiseSaying
-import com.ll.domain.wiseSaying.repository.WiseSayingRepository
+import com.ll.domain.wiseSaying.repository.WiseSayingMemoryRepository
 import com.ll.standard.page.Page
 import com.ll.standard.page.Pageable
 
 class WiseSayingService {
-    private val wiseSayingRepository = WiseSayingRepository()
+    private val wiseSayingRepository = WiseSayingMemoryRepository()
 
     fun create(content: String, author: String): WiseSaying {
         val wiseSaying = WiseSaying(content = content, author = author)

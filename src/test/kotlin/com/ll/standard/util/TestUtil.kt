@@ -1,4 +1,4 @@
-package com.ll.domain.standard.util
+package com.ll.standard.util
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException
