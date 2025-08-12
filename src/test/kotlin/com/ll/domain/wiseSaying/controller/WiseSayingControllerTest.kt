@@ -184,4 +184,86 @@ class WiseSayingControllerTest {
             .doesNotContain("2 / 나폴레옹 / 내 사전에 불가능이란 없다.")
             .contains("1 / 이순신 / 나의 죽음을 적들에게 알리지 마라.")
     }
+
+    fun makeSampleData(): String {
+        return (1..10).joinToString("\n") {
+            "등록\n명언 $it\n작가미상 $it"
+        }
+    }
+
+    @Test
+    @DisplayName("목록?page=1")
+    fun t11() {
+        val output = AppTestRunner.run("${makeSampleData()}\n목록?page=1")
+
+        assertThat(output)
+            .contains("10 / 작가미상 10 / 명언 10")
+            .contains("9 / 작가미상 9 / 명언 9")
+            .contains("8 / 작가미상 8 / 명언 8")
+            .contains("7 / 작가미상 7 / 명언 7")
+            .contains("6 / 작가미상 6 / 명언 6")
+            .doesNotContain("5 / 작가미상 5 / 명언 5")
+            .doesNotContain("4 / 작가미상 4 / 명언 4")
+            .doesNotContain("3 / 작가미상 3 / 명언 3")
+            .doesNotContain("2 / 작가미상 2 / 명언 2")
+            .doesNotContain("1 / 작가미상 1 / 명언 1")
+            .contains("페이지 : [1] / 2")
+    }
+
+    @Test
+    @DisplayName("목록?page=2")
+    fun t12() {
+        val output = AppTestRunner.run("${makeSampleData()}\n목록?page=2")
+
+        assertThat(output)
+            .doesNotContain("10 / 작가미상 10 / 명언 10")
+            .doesNotContain("9 / 작가미상 9 / 명언 9")
+            .doesNotContain("8 / 작가미상 8 / 명언 8")
+            .doesNotContain("7 / 작가미상 7 / 명언 7")
+            .doesNotContain("6 / 작가미상 6 / 명언 6")
+            .contains("5 / 작가미상 5 / 명언 5")
+            .contains("4 / 작가미상 4 / 명언 4")
+            .contains("3 / 작가미상 3 / 명언 3")
+            .contains("2 / 작가미상 2 / 명언 2")
+            .contains("1 / 작가미상 1 / 명언 1")
+            .contains("페이지 : 1 / [2]")
+    }
+
+    @Test
+    @DisplayName("목록?keyword=명언&page=2")
+    fun t13() {
+        val output = AppTestRunner.run("${makeSampleData()}\n목록?keyword=명언&page=2")
+
+        assertThat(output)
+            .doesNotContain("10 / 작가미상 10 / 명언 10")
+            .doesNotContain("9 / 작가미상 9 / 명언 9")
+            .doesNotContain("8 / 작가미상 8 / 명언 8")
+            .doesNotContain("7 / 작가미상 7 / 명언 7")
+            .doesNotContain("6 / 작가미상 6 / 명언 6")
+            .contains("5 / 작가미상 5 / 명언 5")
+            .contains("4 / 작가미상 4 / 명언 4")
+            .contains("3 / 작가미상 3 / 명언 3")
+            .contains("2 / 작가미상 2 / 명언 2")
+            .contains("1 / 작가미상 1 / 명언 1")
+            .contains("페이지 : 1 / [2]")
+    }
+
+    @Test
+    @DisplayName("목록?keyword=명언 1")
+    fun t14() {
+        val output = AppTestRunner.run("${makeSampleData()}\n목록?keyword=명언 1")
+
+        assertThat(output)
+            .contains("10 / 작가미상 10 / 명언 10")
+            .doesNotContain("9 / 작가미상 9 / 명언 9")
+            .doesNotContain("8 / 작가미상 8 / 명언 8")
+            .doesNotContain("7 / 작가미상 7 / 명언 7")
+            .doesNotContain("6 / 작가미상 6 / 명언 6")
+            .doesNotContain("5 / 작가미상 5 / 명언 5")
+            .doesNotContain("4 / 작가미상 4 / 명언 4")
+            .doesNotContain("3 / 작가미상 3 / 명언 3")
+            .doesNotContain("2 / 작가미상 2 / 명언 2")
+            .contains("1 / 작가미상 1 / 명언 1")
+            .contains("페이지 : [1]")
+    }
 }
