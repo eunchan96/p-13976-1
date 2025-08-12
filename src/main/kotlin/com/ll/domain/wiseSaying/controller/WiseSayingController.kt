@@ -1,7 +1,7 @@
 package com.ll.domain.wiseSaying.controller
 
-import com.ll.global.app.AppContext.wiseSayingService
 import com.ll.domain.wiseSaying.entity.WiseSaying
+import com.ll.global.app.AppContext.wiseSayingService
 import com.ll.global.rq.Rq
 import com.ll.standard.page.Page
 import com.ll.standard.page.Pageable
@@ -75,5 +75,10 @@ class WiseSayingController {
         val author = readlnOrNull()!!.trim()
 
         wiseSayingService.modify(wiseSaying, content, author)
+    }
+
+    fun build() {
+        wiseSayingService.build()
+        println("data.json 파일의 내용이 갱신되었습니다.")
     }
 }

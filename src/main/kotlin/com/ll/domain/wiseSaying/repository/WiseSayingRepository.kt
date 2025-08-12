@@ -24,4 +24,6 @@ interface WiseSayingRepository {
     fun getTableDirPath(): String {
         return "db/wiseSaying"
     }
+
+    fun build()
 }

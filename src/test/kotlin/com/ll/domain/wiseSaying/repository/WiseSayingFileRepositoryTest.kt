@@ -2,6 +2,7 @@ package com.ll.domain.wiseSaying.repository
 
 import com.ll.domain.wiseSaying.entity.WiseSaying
 import com.ll.standard.page.Pageable
+import com.ll.standard.util.Util
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -123,48 +124,48 @@ class WiseSayingFileRepositoryTest {
         ).containsExactly(wiseSaying5, wiseSaying3)
     }
 
-//    @Test
-//    @DisplayName("빌드를 하면 data.json 파일이 생성된다.")
-//    fun t8() {
-//        val wiseSaying1 = WiseSaying(content = "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", author = "괴테")
-//        wiseSayingFileRepository.save(wiseSaying1)
-//
-//        val wiseSaying2 = WiseSaying(content = "나의 삶의 가치는 나의 결정에 달려있다.", author = "아인슈타인")
-//        wiseSayingFileRepository.save(wiseSaying2)
-//
-//        val filePath = wiseSayingFileRepository.archive()
-//
-//        assertThat(Util.FileUtil.exists(filePath)).isTrue()
-//    }
+    @Test
+    @DisplayName("빌드를 하면 data.json 파일이 생성된다.")
+    fun t8() {
+        val wiseSaying1 = WiseSaying(content = "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", author = "괴테")
+        wiseSayingFileRepository.save(wiseSaying1)
 
-//    @Test
-//    @DisplayName("빌드 시 생성되는 data.json은 배열의 형태이다.")
-//    fun t9() {
-//        val wiseSaying1 = WiseSaying(content = "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", author = "괴테")
-//        wiseSayingFileRepository.save(wiseSaying1)
-//
-//        val wiseSaying2 = WiseSaying(content = "나의 삶의 가치는 나의 결정에 달려있다.", author = "아인슈타인")
-//        wiseSayingFileRepository.save(wiseSaying2)
-//
-//        val filePath = wiseSayingFileRepository.archive()
-//
-//        val jsonStr = Util.FileUtil.get(filePath)
-//
-//        assertThat(jsonStr).isEqualTo(
-//            """
-//            [
-//                {
-//                    "id": 2,
-//                    "content": "나의 삶의 가치는 나의 결정에 달려있다.",
-//                    "author": "아인슈타인"
-//                },
-//                {
-//                    "id": 1,
-//                    "content": "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.",
-//                    "author": "괴테"
-//                }
-//            ]
-//            """.trimIndent()
-//        )
-//    }
+        val wiseSaying2 = WiseSaying(content = "나의 삶의 가치는 나의 결정에 달려있다.", author = "아인슈타인")
+        wiseSayingFileRepository.save(wiseSaying2)
+
+        wiseSayingFileRepository.build()
+
+        assertThat(Util.FileUtil.exists("db/wiseSaying/data.json")).isTrue()
+    }
+
+    @Test
+    @DisplayName("빌드 시 생성되는 data.json은 배열의 형태이다.")
+    fun t9() {
+        val wiseSaying1 = WiseSaying(content = "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", author = "괴테")
+        wiseSayingFileRepository.save(wiseSaying1)
+
+        val wiseSaying2 = WiseSaying(content = "나의 삶의 가치는 나의 결정에 달려있다.", author = "아인슈타인")
+        wiseSayingFileRepository.save(wiseSaying2)
+
+        wiseSayingFileRepository.build()
+
+        val jsonStr = Util.FileUtil.get("db/wiseSaying/data.json")
+
+        assertThat(jsonStr).isEqualTo(
+            """
+            [
+                {
+                    "id": 1,
+                    "content": "꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.",
+                    "author": "괴테"
+                },
+                {
+                    "id": 2,
+                    "content": "나의 삶의 가치는 나의 결정에 달려있다.",
+                    "author": "아인슈타인"
+                }
+            ]
+            """.trimIndent()
+        )
+    }
 }

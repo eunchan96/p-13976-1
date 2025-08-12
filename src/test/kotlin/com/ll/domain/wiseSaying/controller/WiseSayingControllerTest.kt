@@ -266,4 +266,22 @@ class WiseSayingControllerTest {
             .contains("1 / 작가미상 1 / 명언 1")
             .contains("페이지 : [1]")
     }
+
+    @Test
+    @DisplayName("빌드")
+    fun t15() {
+        val output = AppTestRunner.run(
+            """
+            등록
+            나의 죽음을 적들에게 알리지 마라.
+            이순신
+            등록
+            내 사전에 불가능이란 없다.
+            나폴레용
+            빌드
+            """)
+
+        assertThat(output)
+            .contains("data.json 파일의 내용이 갱신되었습니다.")
+    }
 }

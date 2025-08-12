@@ -76,4 +76,10 @@ class WiseSayingFileRepository : WiseSayingRepository {
     override fun clear() {
         Util.FileUtil.rmdir(getTableDirPath())
     }
+
+    override fun build() {
+        val map = findAll().map { it.toMap() }
+        val json = Util.JsonUtil.toString(map)
+        Util.FileUtil.set("${getTableDirPath()}/data.json", json)
+    }
 }
