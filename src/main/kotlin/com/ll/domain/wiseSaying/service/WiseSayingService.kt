@@ -30,4 +30,13 @@ class WiseSayingService {
 
         wiseSayingRepository.save(wiseSaying)
     }
+
+    fun findForList(keywordType: String, keyword: String): List<WiseSaying> {
+        if (keywordType == "all") return wiseSayingRepository.findAll()
+        return when (keywordType) {
+            "content" -> wiseSayingRepository.findForListByContent(keyword)
+            "author" -> wiseSayingRepository.findForListByAuthor(keyword)
+            else -> wiseSayingRepository.findForListByContentOrAuthor(keyword)
+        }
+    }
 }

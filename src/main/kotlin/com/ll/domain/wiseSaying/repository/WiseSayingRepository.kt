@@ -25,4 +25,16 @@ class WiseSayingRepository {
     fun delete(wiseSaying: WiseSaying): Boolean {
         return wiseSayings.remove(wiseSaying)
     }
+
+    fun findForListByContent(keyword: String): List<WiseSaying> {
+        return wiseSayings.filter { it.content.contains(keyword) }
+    }
+
+    fun findForListByAuthor(keyword: String): List<WiseSaying> {
+        return wiseSayings.filter { it.author.contains(keyword) }
+    }
+
+    fun findForListByContentOrAuthor(keyword: String): List<WiseSaying> {
+        return wiseSayings.filter { it.content.contains(keyword) || it.author.contains(keyword) }
+    }
 }

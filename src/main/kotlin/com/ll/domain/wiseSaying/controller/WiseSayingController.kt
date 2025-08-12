@@ -17,10 +17,14 @@ class WiseSayingController {
         println("${wiseSaying.id}번 명언이 등록되었습니다.")
     }
 
-    fun list() {
+    fun list(rq: Rq) {
         println("번호 / 작가 / 명언")
         println("----------------------")
-        for (wiseSaying in wiseSayingService.findAll()) {
+
+        val keywordType = rq.getParam("keywordType", "all")
+        val keyword = rq.getParam("keyword", "")
+
+        for (wiseSaying in wiseSayingService.findForList(keywordType, keyword)) {
             println("${wiseSaying.id} / ${wiseSaying.author} / ${wiseSaying.content}")
         }
     }

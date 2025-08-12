@@ -127,4 +127,61 @@ class WiseSayingControllerTest {
             .contains("1 / 아리스토텔레스 / 현재를 사랑하세요.")
             .doesNotContain("1 / 작지미상 / 현재를 사랑하라.")
     }
+
+    @Test
+    @DisplayName("목록 검색 - author")
+    fun t8() {
+        val output = AppTestRunner.run(
+            """
+            등록
+            나의 죽음을 적들에게 알리지 마라.
+            작가미상
+            등록
+            내 사전에 불가능이란 없다.
+            작가미상
+            목록?keywordType=author&keyword=작가
+            """)
+
+        assertThat(output)
+            .contains("2 / 작가미상 / 내 사전에 불가능이란 없다.")
+            .contains("1 / 작가미상 / 나의 죽음을 적들에게 알리지 마라.")
+    }
+
+    @Test
+    @DisplayName("목록 검색 - content")
+    fun t9() {
+        val output = AppTestRunner.run(
+            """
+            등록
+            나의 죽음을 적들에게 알리지 마라.
+            작가미상
+            등록
+            내 사전에 불가능이란 없다.
+            작가미상
+            목록?keywordType=content&keyword=불가능
+            """)
+
+        assertThat(output)
+            .contains("2 / 작가미상 / 내 사전에 불가능이란 없다.")
+            .doesNotContain("1 / 작가미상 / 나의 죽음을 적들에게 알리지 마라.")
+    }
+
+    @Test
+    @DisplayName("목록 검색 - without keywordType")
+    fun t10() {
+        val output = AppTestRunner.run(
+            """
+            등록
+            나의 죽음을 적들에게 알리지 마라.
+            이순신
+            등록
+            내 사전에 불가능이란 없다.
+            나폴레용
+            목록?keyword=이순신
+            """)
+
+        assertThat(output)
+            .doesNotContain("2 / 나폴레옹 / 내 사전에 불가능이란 없다.")
+            .contains("1 / 이순신 / 나의 죽음을 적들에게 알리지 마라.")
+    }
 }
