@@ -2,6 +2,7 @@ package com.ll
 
 import com.ll.domain.system.controller.SystemController
 import com.ll.domain.wiseSaying.controller.WiseSayingController
+import com.ll.global.rq.Rq
 
 class App {
     private val wiseSayingController = WiseSayingController()
@@ -12,18 +13,18 @@ class App {
 
         while (true) {
             print("명령) ")
-            val rq = readlnOrNull()!!.trim()
-            val cmd = rq.split("?")
+            val cmd = readlnOrNull()!!.trim()
+            val rq = Rq(cmd)
 
-            when (cmd[0]) {
+            when (rq.getActionName()) {
                 "종료" -> {
                     systemController.exit()
                     return
                 }
                 "등록" -> wiseSayingController.create()
                 "목록" -> wiseSayingController.list()
-                "삭제" -> wiseSayingController.delete(cmd)
-                "수정" -> wiseSayingController.modify(cmd)
+                "삭제" -> wiseSayingController.delete(rq)
+                "수정" -> wiseSayingController.modify(rq)
                 else -> println("알 수 없는 명령입니다.")
             }
         }

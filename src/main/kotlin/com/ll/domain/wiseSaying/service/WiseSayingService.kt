@@ -19,7 +19,8 @@ class WiseSayingService {
         return wiseSayingRepository.findById(id)
     }
 
-    fun delete(wiseSaying: WiseSaying): Boolean {
+    fun delete(id: Int): Boolean {
+        val wiseSaying = wiseSayingRepository.findById(id) ?: return false
         return wiseSayingRepository.delete(wiseSaying)
     }
 

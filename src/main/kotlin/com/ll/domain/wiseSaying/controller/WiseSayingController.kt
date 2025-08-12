@@ -1,6 +1,7 @@
 package com.ll.domain.wiseSaying.controller
 
 import com.ll.domain.wiseSaying.service.WiseSayingService
+import com.ll.global.rq.Rq
 
 class WiseSayingController {
     private val wiseSayingService = WiseSayingService()
@@ -24,42 +25,23 @@ class WiseSayingController {
         }
     }
 
-    fun delete(cmd: List<String>) {
-        if (cmd.size < 2) {
-            println("삭제할 명언의 번호를 입력해주세요.")
+    fun delete(rq: Rq) {
+        val id = rq.getParamAsInt("id", null) ?: run {
+            println("id를 정확히 입력해주세요.")
             return
         }
 
-        val params = cmd[1].split("=")
-        if (params.size < 2 || params[0] != "id" || params[1].isBlank() || params[1].toIntOrNull() == null) {
-            println("잘못된 명령입니다.")
-            return
-        }
-
-        val id = params[1].toInt()
-        val wiseSaying = wiseSayingService.findById(id) ?: run {
-            println("${id}번 명언은 존재하지 않습니다.")
-            return
-        }
-
-        wiseSayingService.delete(wiseSaying)
-
-        println("${id}번 명언이 삭제되었습니다.")
+        val deleted = wiseSayingService.delete(id)
+        if (deleted) println("${id}번 명언이 삭제되었습니다.")
+        else println("${id}번 명언은 존재하지 않습니다.")
     }
 
-    fun modify(cmd: List<String>) {
-        if (cmd.size < 2) {
-            println("수정할 명언의 번호를 입력해주세요.")
+    fun modify(rq: Rq) {
+        val id = rq.getParamAsInt("id", null) ?: run {
+            println("id를 정확히 입력해주세요.")
             return
         }
 
-        val params = cmd[1].split("=")
-        if (params.size < 2 || params[0] != "id" || params[1].isBlank() || params[1].toIntOrNull() == null) {
-            println("잘못된 명령입니다.")
-            return
-        }
-
-        val id = params[1].toInt()
         val wiseSaying = wiseSayingService.findById(id) ?: run {
             println("${id}번 명언은 존재하지 않습니다.")
             return
