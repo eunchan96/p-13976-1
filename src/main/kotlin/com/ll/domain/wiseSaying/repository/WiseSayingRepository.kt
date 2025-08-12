@@ -16,15 +16,6 @@ class WiseSayingRepository {
         return wiseSaying
     }
 
-    fun findAll(pageable: Pageable): Page<WiseSaying> {
-        val totalCount = wiseSayings.size
-
-        return wiseSayings.reversed()
-            .drop(pageable.getSkipCount().toInt())
-            .take(pageable.pageSize)
-            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
-    }
-
     fun findById(id: Int): WiseSaying? {
         return wiseSayings.find { it.id == id }
     }
@@ -33,33 +24,31 @@ class WiseSayingRepository {
         return wiseSayings.remove(wiseSaying)
     }
 
-    fun findForListByContent(keyword: String, pageable: Pageable): Page<WiseSaying> {
-        val filtered = wiseSayings.filter { it.content.contains(keyword) }
-        val totalCount = filtered.size
+    private fun createPage(items: List<WiseSaying>, pageable: Pageable): Page<WiseSaying> {
+        val totalCount: Int = items.size
 
-        return filtered.reversed()
+        return items.reversed()
             .drop(pageable.getSkipCount().toInt())
             .take(pageable.pageSize)
             .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
+    }
+
+    fun findAll(pageable: Pageable): Page<WiseSaying> {
+        return createPage(wiseSayings, pageable)
+    }
+
+    fun findForListByContent(keyword: String, pageable: Pageable): Page<WiseSaying> {
+        val filtered = wiseSayings.filter { it.content.contains(keyword) }
+        return createPage(filtered, pageable)
     }
 
     fun findForListByAuthor(keyword: String, pageable: Pageable): Page<WiseSaying> {
         val filtered = wiseSayings.filter { it.author.contains(keyword) }
-        val totalCount = filtered.size
-
-        return filtered.reversed()
-            .drop(pageable.getSkipCount().toInt())
-            .take(pageable.pageSize)
-            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
+        return createPage(filtered, pageable)
     }
 
     fun findForListByContentOrAuthor(keyword: String, pageable: Pageable): Page<WiseSaying> {
         val filtered = wiseSayings.filter { it.author.contains(keyword) || it.content.contains(keyword) }
-        val totalCount = filtered.size
-
-        return filtered.reversed()
-            .drop(pageable.getSkipCount().toInt())
-            .take(pageable.pageSize)
-            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
+        return createPage(filtered, pageable)
     }
 }
