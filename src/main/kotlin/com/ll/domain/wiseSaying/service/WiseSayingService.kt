@@ -2,17 +2,15 @@ package com.ll.domain.wiseSaying.service
 
 import com.ll.domain.wiseSaying.entity.WiseSaying
 import com.ll.domain.wiseSaying.repository.WiseSayingRepository
+import com.ll.standard.page.Page
+import com.ll.standard.page.Pageable
 
 class WiseSayingService {
     private val wiseSayingRepository = WiseSayingRepository()
 
     fun create(content: String, author: String): WiseSaying {
-        val wiseSaying = WiseSaying(content, author)
+        val wiseSaying = WiseSaying(content = content, author = author)
         return wiseSayingRepository.save(wiseSaying)
-    }
-
-    fun findAll(): List<WiseSaying> {
-        return wiseSayingRepository.findAll()
     }
 
     fun findById(id: Int): WiseSaying? {
@@ -31,12 +29,12 @@ class WiseSayingService {
         wiseSayingRepository.save(wiseSaying)
     }
 
-    fun findForList(keywordType: String, keyword: String): List<WiseSaying> {
-        if (keywordType == "all") return wiseSayingRepository.findAll()
+    fun findForList(pageable: Pageable, keywordType: String, keyword: String): Page<WiseSaying> {
+        if (keyword == "") return wiseSayingRepository.findAll(pageable)
         return when (keywordType) {
-            "content" -> wiseSayingRepository.findForListByContent(keyword)
-            "author" -> wiseSayingRepository.findForListByAuthor(keyword)
-            else -> wiseSayingRepository.findForListByContentOrAuthor(keyword)
+            "content" -> wiseSayingRepository.findForListByContent(keyword, pageable)
+            "author" -> wiseSayingRepository.findForListByAuthor(keyword, pageable)
+            else -> wiseSayingRepository.findForListByContentOrAuthor(keyword, pageable)
         }
     }
 }

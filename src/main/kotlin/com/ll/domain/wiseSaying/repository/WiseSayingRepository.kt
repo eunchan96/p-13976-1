@@ -1,6 +1,8 @@
 package com.ll.domain.wiseSaying.repository
 
 import com.ll.domain.wiseSaying.entity.WiseSaying
+import com.ll.standard.page.Page
+import com.ll.standard.page.Pageable
 
 class WiseSayingRepository {
     private var lastId = 0
@@ -14,8 +16,13 @@ class WiseSayingRepository {
         return wiseSaying
     }
 
-    fun findAll(): List<WiseSaying> {
+    fun findAll(pageable: Pageable): Page<WiseSaying> {
+        val totalCount = wiseSayings.size
+
         return wiseSayings.reversed()
+            .drop(pageable.getSkipCount().toInt())
+            .take(pageable.pageSize)
+            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
     }
 
     fun findById(id: Int): WiseSaying? {
@@ -26,15 +33,33 @@ class WiseSayingRepository {
         return wiseSayings.remove(wiseSaying)
     }
 
-    fun findForListByContent(keyword: String): List<WiseSaying> {
-        return wiseSayings.filter { it.content.contains(keyword) }
+    fun findForListByContent(keyword: String, pageable: Pageable): Page<WiseSaying> {
+        val filtered = wiseSayings.filter { it.content.contains(keyword) }
+        val totalCount = filtered.size
+
+        return filtered.reversed()
+            .drop(pageable.getSkipCount().toInt())
+            .take(pageable.pageSize)
+            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
     }
 
-    fun findForListByAuthor(keyword: String): List<WiseSaying> {
-        return wiseSayings.filter { it.author.contains(keyword) }
+    fun findForListByAuthor(keyword: String, pageable: Pageable): Page<WiseSaying> {
+        val filtered = wiseSayings.filter { it.author.contains(keyword) }
+        val totalCount = filtered.size
+
+        return filtered.reversed()
+            .drop(pageable.getSkipCount().toInt())
+            .take(pageable.pageSize)
+            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
     }
 
-    fun findForListByContentOrAuthor(keyword: String): List<WiseSaying> {
-        return wiseSayings.filter { it.content.contains(keyword) || it.author.contains(keyword) }
+    fun findForListByContentOrAuthor(keyword: String, pageable: Pageable): Page<WiseSaying> {
+        val filtered = wiseSayings.filter { it.author.contains(keyword) || it.content.contains(keyword) }
+        val totalCount = filtered.size
+
+        return filtered.reversed()
+            .drop(pageable.getSkipCount().toInt())
+            .take(pageable.pageSize)
+            .let { Page(totalCount, pageable.pageNum, pageable.pageSize, it) }
     }
 }

@@ -18,7 +18,7 @@ class Rq {
         return params[paramName] ?: defaultValue
     }
 
-    fun getParamAsInt(paramName: String, defaultValue: Int?): Int? {
+    fun getParamAsInt(paramName: String, defaultValue: Int): Int {
         val value = getParam(paramName, "")
         if (value.isBlank()) return defaultValue
 

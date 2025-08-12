@@ -1,7 +1,10 @@
 package com.ll.domain.wiseSaying.controller
 
+import com.ll.domain.wiseSaying.entity.WiseSaying
 import com.ll.domain.wiseSaying.service.WiseSayingService
 import com.ll.global.rq.Rq
+import com.ll.standard.page.Page
+import com.ll.standard.page.Pageable
 
 class WiseSayingController {
     private val wiseSayingService = WiseSayingService()
@@ -21,16 +24,29 @@ class WiseSayingController {
         println("번호 / 작가 / 명언")
         println("----------------------")
 
+        val pageNum = rq.getParamAsInt("page", 1)
+        val pageSize = rq.getParamAsInt("pageSize", 5)
+        val pageable = Pageable(pageNum, pageSize)
+
         val keywordType = rq.getParam("keywordType", "all")
         val keyword = rq.getParam("keyword", "")
 
-        for (wiseSaying in wiseSayingService.findForList(keywordType, keyword)) {
+        val wiseSayingPage: Page<WiseSaying> = wiseSayingService.findForList(pageable, keywordType, keyword)
+
+        for (wiseSaying in wiseSayingPage.content) {
             println("${wiseSaying.id} / ${wiseSaying.author} / ${wiseSaying.content}")
         }
+
+        print("페이지 : ")
+        val pageMenu = (1..wiseSayingPage.totalPages).joinToString(" / ") {
+            i -> if (i == wiseSayingPage.pageNum) "[$i]" else "$i"
+        }
+        println(pageMenu)
     }
 
     fun delete(rq: Rq) {
-        val id = rq.getParamAsInt("id", null) ?: run {
+        val id = rq.getParamAsInt("id", -1)
+        if (id <= 0) {
             println("id를 정확히 입력해주세요.")
             return
         }
@@ -41,7 +57,8 @@ class WiseSayingController {
     }
 
     fun modify(rq: Rq) {
-        val id = rq.getParamAsInt("id", null) ?: run {
+        val id = rq.getParamAsInt("id", -1)
+        if (id <= 0) {
             println("id를 정확히 입력해주세요.")
             return
         }
